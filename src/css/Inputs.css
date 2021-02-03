@@ -1,0 +1,98 @@
+/* PC */
+.FormSegment {
+    margin: 40px auto;
+    display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.SegmentTop {
+    display: flex;
+    flex-direction: column;
+  justify-content: center;
+   /* align-items: center;  */
+    width:60vw;
+    height: 60vh;
+}
+
+.FormParent {
+    /* margin: 50px auto; */
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center;
+    align-items: center; */
+}
+
+.Form content {
+    width:100px;
+}
+
+.ui.form .fields>.field:first-child {
+    width:90%;
+}
+
+/* ここから */
+
+.DonationForm {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+    /* color: #1f88ff; */
+    color:#2e4ae8;
+}
+
+.DonationHeader {
+    /* color: #1f88ff;文字色 */
+    color:#2e4ae8;
+    font-family: cursive;
+    /* padding-left: 18vh; */
+    text-align: center;
+    font-size: 5vh;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.FormContents{
+    width: 47vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: space-between;
+}
+
+.Labels {
+    font-weight: bold;
+}
+
+.InputFormInside {
+    padding: 40px;
+    border-radius: 6px;
+    /* background-color: black; */
+    display: flex;
+    flex-direction: column;
+    justify-content:space-between;
+    /* width: 40%; */
+    border: solid;
+    /* border-color:#3075ff; */
+    border-color:#4d88ff;
+}
+
+
+.ui.yellow.button {
+    width: 15em;
+    margin: 20px 0px 10px 0px;
+}
+
+.Input1 {
+    /* display: flex;
+    flex-direction: row;
+    justify-content:space-between; */
+    width: 100%;
+    padding-bottom: 1.5em;
+}
+
+.GroupName {
+    width: 100%;
+}

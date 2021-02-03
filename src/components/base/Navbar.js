@@ -15,10 +15,12 @@ function Navbar(){
     return (
         <>
         <Menu style={{ width: "100vw", display: "flex", flexDirection: "row", alignItems: "center", marginBottom: "-1px" ,background:"black"}}>
-        <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-evenly", width: "80vw"}}>
-            <Link to="/" style={{ color:"orange", fontWeight:"bold"}} >Home</Link>
-            <Link to="/" style={{ color:"orange", fontWeight:"bold"}} >Login</Link>
-            <Link to="/" style={{ color:"orange", fontWeight:"bold"}} >Sign up</Link>
+        <div style={{ fontSize:"0.9em",display: "flex", flexDirection: "row", justifyContent: "space-evenly", width: "80vw"}}>
+            <Link to="/" style={{ color:"#FDDF02", fontWeight:"bold"}} >Home</Link>
+            <Link to="/login" style={{ color:"#FDDF02", fontWeight:"bold"}} >Login</Link>
+            <Link to="/signup" style={{ color:"#FDDF02", fontWeight:"bold"}} >Sign up</Link>
+            <Link to="/inputs" style={{ color:"#FDDF02", fontWeight:"bold"}} >寄付記録作成</Link>
+            <Link to="/donation_list" style={{ color:"#FDDF02", fontWeight:"bold"}} >寄付記録</Link>
         </div>
         </Menu>
         {/* <Menu inverted>
@@ -28,9 +30,8 @@ function Navbar(){
               name={c}
               active={activeA === c}
               color={c}
-            //   onClick={handleAClick}
-            // value={activeA}
-            onClick={(name) => setColor(name)}
+              onClick = {(c)=> {setColor(c.target.classList[0])
+              }}
             />
           ))}
         </Menu> */}

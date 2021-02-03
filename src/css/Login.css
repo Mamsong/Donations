@@ -1,0 +1,47 @@
+.LoginForm {
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    align-items: center;
+    height: 100vh;
+    color: #FFE21F;/*文字色*/
+    background-color:#bce2e8;
+    padding-Top:18vh;
+}
+
+.Header {
+    color: #FFE21F;/*文字色*/
+    font-family: cursive;
+    /* padding-left: 18vh; */
+    text-align: center;
+    font-size: 4.5vh;
+    margin-bottom: 10px;
+}
+
+.FormContents{
+    width: 47vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.Labels {
+    font-weight: bold;
+}
+
+.LoginFormInside {
+    padding: 30px;
+    border-radius: 6px;
+    /* background-color: #0f1a4d; */
+    background-color:#0d3380;
+}
+
+.Input {
+    width: 40vh;
+}
+
+.ui.yellow.button {
+    width: 15em;
+    margin: 20px 0px 10px 0px;
+}
