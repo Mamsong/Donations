@@ -1,0 +1,45 @@
+.RegisterForm {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: #FFE21F;/*文字色*/
+    background-color:#bce2e8;
+}
+
+.SignupHeader {
+    /* color: #FFE21F;文字色 */
+    text-align: center;
+    font-family: cursive;
+    font-size: 2.2em;
+    margin-bottom: 11px;
+}
+
+.FormContents{
+    width: 47vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.Labels {
+    font-weight: bold;
+}
+
+.FormInside {
+    padding: 30px;
+    padding-top: 20px;
+    border-radius: 6px;
+    background-color:#0d3380;
+}
+
+.Input {
+    width: 40vh;
+}
+
+.ui.yellow.button {
+    width: 15em;
+    margin: 20px 0px 10px 0px;
+}

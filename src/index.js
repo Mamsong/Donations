@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'semantic-ui-css/semantic.min.css';
+import 'rsuite/lib/styles/index.less';
 
 ReactDOM.render(
   <React.StrictMode>

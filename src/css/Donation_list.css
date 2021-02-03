@@ -1,0 +1,11 @@
+.Donation_table {
+    width:90%;
+    margin-top: 50px;
+}
+
+.Donation_Body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
