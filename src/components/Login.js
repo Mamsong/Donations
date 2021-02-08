@@ -15,6 +15,7 @@ export default function Login() {
         try {
             if(email.length==0) return Alert.warning('メールアドレスが未入力です。');
             if(password.length==0) return Alert.warning('パスワードが未入力です。');
+
         } catch (err) {
             Alert.error('ログインに失敗しました。');
         }
