@@ -96,3 +96,18 @@
 .GroupName {
     width: 100%;
 }
+
+/* MPHONE */
+.InputFormInsideMP {
+    padding: 10px;
+    border-radius: 6px;
+    /* background-color: black; */
+    display: flex;
+    flex-direction: column;
+    justify-content:space-between;
+    /* width: 40%; */
+    /* border: solid; */
+    /* border-color:#3075ff; */
+    border-color:#4d88ff;
+    margin-top: 10px;
+}

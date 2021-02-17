@@ -1,6 +1,7 @@
 .Body {
     background-color: black;
     height:100vh;
+    margin-top: -11px;
 }
 
 .TopContainer{

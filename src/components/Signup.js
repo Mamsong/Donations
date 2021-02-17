@@ -6,6 +6,7 @@ import { Alert } from 'rsuite';
 import { isValidStr } from '../utils/index.js';
 import { useHttp } from '../hooks/useHttp';
 import { useHistory } from 'react-router-dom';
+import MediaQuery from "react-responsive";
 
 
 
@@ -37,22 +38,46 @@ export default function Signup() {
     }
 
     return (
-        <div>
-        <Navbar />
-            <div className ="RegisterForm">
-                <div className = "FormInside">
-                    <p className="SignupHeader">Sign up</p>
-                    <Form className="FormContents">
-                    <p　className="Labels">ユーザーネーム</p>
-                    <Form.Input type='name' placeholder='username' className="Input" value={username} onChange={e => regUsername(e.target.value)}/>
-                    <p　className="Labels">メールアドレス</p>
-                    <Form.Input type='email' placeholder='email' className="Input" value={ email } onChange={e => regEmail(e.target.value)}/>
-                    <p　className="Labels">パスワード</p>
-                    <Form.Input type='password' placeholder='半角英数字4文字以上' className="Input" value={ password } onChange={e => regPassword(e.target.value)}/>
-                    <Button inverted color='yellow' className = "RegisterButton" type='submit' onClick={HandleRegister}>新規登録</Button>
-                </Form>
+        <>
+        <MediaQuery query="(min-width: 767px)">
+            <div>
+            <Navbar />
+                <div className ="RegisterForm">
+                    <div className = "FormInside">
+                        <p className="SignupHeader">Sign up</p>
+                        <Form className="FormContents">
+                        <p　className="Labels">ユーザーネーム</p>
+                        <Form.Input type='name' placeholder='username' className="Input" value={username} onChange={e => regUsername(e.target.value)}/>
+                        <p　className="Labels">メールアドレス</p>
+                        <Form.Input type='email' placeholder='email' className="Input" value={ email } onChange={e => regEmail(e.target.value)}/>
+                        <p　className="Labels">パスワード</p>
+                        <Form.Input type='password' placeholder='半角英数字4文字以上' className="Input" value={ password } onChange={e => regPassword(e.target.value)}/>
+                        <Button inverted color='yellow' className = "RegisterButton" type='submit' onClick={HandleRegister}>新規登録</Button>
+                    </Form>
+                    </div>
                 </div>
             </div>
-        </div>
+        </MediaQuery>
+
+        <MediaQuery query="(max-width: 767px)">
+            <div>
+            <Navbar />
+                <div className ="RegisterFormMP">
+                    <div className = "FormInsideMP">
+                        <p className="SignupHeader">Sign up</p>
+                        <Form className="FormContents">
+                        <p　className="Labels">ユーザーネーム</p>
+                        <Form.Input type='name' placeholder='username' className="Input" value={username} onChange={e => regUsername(e.target.value)}/>
+                        <p　className="Labels">メールアドレス</p>
+                        <Form.Input type='email' placeholder='email' className="Input" value={ email } onChange={e => regEmail(e.target.value)}/>
+                        <p　className="Labels">パスワード</p>
+                        <Form.Input type='password' placeholder='半角英数字4文字以上' className="Input" value={ password } onChange={e => regPassword(e.target.value)}/>
+                        <Button inverted color='yellow' className = "RegisterButton" type='submit' onClick={HandleRegister}>新規登録</Button>
+                    </Form>
+                    </div>
+                </div>
+            </div>
+        </MediaQuery>
+        </>
     )
 }

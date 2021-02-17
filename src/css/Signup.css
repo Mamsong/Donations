@@ -43,3 +43,22 @@
     width: 15em;
     margin: 20px 0px 10px 0px;
 }
+
+/* MPHONE */
+.FormInsideMP {
+    padding: 15px;
+    padding-top: 20px;
+    border-radius: 6px;
+    background-color:#0d3380;
+}
+
+.RegisterFormMP {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: #FFE21F;/*文字色*/
+    background-color:#bce2e8;
+    margin-top: -10px;
+}
