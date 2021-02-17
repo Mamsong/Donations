@@ -4,6 +4,7 @@ import Navbar from './base/Navbar';
 import '../css/Login.css';
 import { Alert } from 'rsuite';
 import { useHistory } from 'react-router-dom';
+import MediaQuery from "react-responsive";
 
 
 export default function Login() {
@@ -22,10 +23,30 @@ export default function Login() {
     }
 
     return (
-        <div>
+        <>
+        <MediaQuery query="(min-width: 767px)">
+            <div>
+            <Navbar />
+                <div className ="LoginForm">
+                    <div className = "LoginFormInside">
+                        <p className="Header">Login</p>
+                        <Form className="FormContents">
+                        <p　className="Labels">メールアドレス</p>
+                        <Form.Input type='email' placeholder='email' className="Input" value={email} onChange={e => setEmail(e.target.value)}/>
+                        <p　className="Labels">パスワード</p>
+                        <Form.Input type='password' placeholder='password' className="Input" value={password} onChange={e => setPassword(e.target.value)}/>
+                        <Button inverted color='yellow' className = "LoginButton" type='submit' onClick={handleSubmit} >Login</Button>
+                        </Form>
+                    </div>
+                </div>
+            </div>
+        </MediaQuery>
+
+        <MediaQuery query="(max-width: 767px)">
+        <div style={{backgroundColor:"#bce2e8", height:"100vh"}}>
         <Navbar />
-            <div className ="LoginForm">
-                <div className = "LoginFormInside">
+            <div className ="LoginFormMP">
+                <div className = "LoginFormInsideMP">
                     <p className="Header">Login</p>
                     <Form className="FormContents">
                     <p　className="Labels">メールアドレス</p>
@@ -37,5 +58,7 @@ export default function Login() {
                 </div>
             </div>
         </div>
+        </MediaQuery>
+        </>
     )
 }

@@ -45,3 +45,22 @@
     width: 15em;
     margin: 20px 0px 10px 0px;
 }
+
+/* MPHONE */
+.LoginFormInsideMP {
+    padding: 15px;
+    border-radius: 6px;
+    /* background-color: #0f1a4d; */
+    background-color:#0d3380;
+}
+
+.LoginFormMP {
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    align-items: center;
+    height: 100vh;
+    color: #FFE21F;/*文字色*/
+    background-color:#bce2e8;
+    padding-Top:15vh;
+}
