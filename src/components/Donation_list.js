@@ -2,13 +2,13 @@ import React from 'react'
 import { List,FlexboxGrid,Icon } from 'rsuite';
 import Navbar from './base/Navbar';
 import '../css/Donation_list.css';
-
+import WorldMap from './WorldMap';
 
 export default function Donation_list() {
     const data = [
         {
           title: 'Accept International',
-          icon: 'image',
+          icon: 'money',
           creator: 'Yvnonne',
           date: '2017.10.13 14:50',
           peak: 3223,
@@ -75,8 +75,10 @@ export default function Donation_list() {
     return (
         <div>
             <Navbar />
+            <div className="WorldMapCont"><WorldMap /></div>
                 <div className="Donation_Body">
                 <div className="Donation_table">
+                  <div>寄付記録一覧</div>
                 <List hover>
                 {data.map((item, index) => (
                     <List.Item key={item['title']} index={index}>
