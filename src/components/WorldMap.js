@@ -1,8 +1,28 @@
-import React from 'react';
+import React, { useState,useEffect } from 'react';
+import { useHttp } from '../hooks/useHttp';
+import { Alert } from 'rsuite';
 import Chart from "react-google-charts";
 import { Link, withRouter } from 'react-router-dom';
+import { useWorldmap } from '../hooks/useWorldmap';
 
 function WorldMap(){
+
+    
+    const {  nationData,
+        getNationData } = useWorldmap();
+
+    useEffect(() => {
+        getNationData(2)
+      },[]);
+
+    const list = [['CountryKey','Donation'],['CG' ,6888]]
+    // list.push([nationData[0].nation_key, nationData[0].sum]);
+    
+    // function sample() {
+    //     return sampleResolve(5).then(result => {
+    //         return result + 5;
+    //     });
+    // }
 
     return(
         <>
@@ -10,6 +30,7 @@ function WorldMap(){
                 width={'700px'}
                 height={'500px'}
                 chartType="GeoChart"
+                // data={list}
                 data={[
                   ['CountryKey','Donation'],
                   ['CG' ,6888],
