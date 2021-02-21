@@ -1,58 +1,47 @@
-import React from 'react'
+import React, { useState, useEffect }from 'react'
 import { List,FlexboxGrid,Icon } from 'rsuite';
 import Navbar from './base/Navbar';
 import '../css/Donation_list.css';
 import WorldMap from './WorldMap';
+import { Alert } from 'rsuite';
+import { Button } from 'semantic-ui-react';
+
+import { useDonationRecord } from '../hooks/useDonationRecord';
 
 export default function Donation_list() {
-    const data = [
-        {
-          title: 'Accept International',
-          icon: 'money',
-          creator: 'Yvnonne',
-          date: '2017.10.13 14:50',
-          peak: 3223,
-          uv: 'Japan',
-        },
-        {
-          title: 'Celebration of the Mid-Autumn festival',
-          icon: 'image',
-          creator: 'Daibiao',
-          date: '2017.10.13 14:50',
-          peak: 3223,
-          uv: 'Thai',
-        },
-        {
-          title: 'Live to play basketball',
-          icon: 'film',
-          creator: 'Bidetoo',
-          date: '2017.10.13 14:50',
-          peak: 4238,
-          uv: 'Kenya',
-        },
-        {
-          title: '2018 the legislature meeting broadcast live',
-          icon: 'film',
-          creator: 'Yvnonne',
-          date: '2017.10.13 14:50',
-          peak: 4238,
-          uv: 'Somaria',
-        },
-        {
-          title: 'Aiwanke paster',
-          icon: 'image',
-          creator: 'Tony',
-          date: '2017.10.13 14:50',
-          peak: 2321,
-          uv: 'Indonasia',
-        }
-      ];
-      const styleCenter = {
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: '60px'
-      };
+    const [page, setPage] = useState(1);
+    const [offset, setOffset] = useState(0);
+    const [isSearched, setIsSearched] = useState(false);
+
+    const { donationData,
+          getDonationList } = useDonationRecord();
+
+    const goToNextPage = () => {
+      setOffset(offset + 4);
+      setPage(page + 1);
+      if(donationData.length < 4 && !isSearched) {
+        setOffset(offset);
+        setPage(page);
+        return Alert.warning('該当するデータがありません。');
+      }
+    };
+
+    const goToBeforePage = () => {
+      if(page == 1) return Alert.warning('該当するデータがありません。');
+      setOffset(offset - 4);
+      setPage(page - 1);
+    };
+
+    useEffect(() => {
+      getDonationList(2, offset);
+    },[offset]);
+
+    const styleCenter = {
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      height: '60px'
+    };
       
       const slimText = {
         fontSize: '0.666em',
@@ -80,13 +69,13 @@ export default function Donation_list() {
                 <div className="Donation_table">
                   <div>寄付記録一覧</div>
                 <List hover>
-                {data.map((item, index) => (
-                    <List.Item key={item['title']} index={index}>
+                {donationData.map((e) => (
+                    <List.Item key={e.record_id} index={e.record_id}>
                     <FlexboxGrid>
                         {/*icon*/}
                         <FlexboxGrid.Item colspan={2} style={styleCenter}>
                         <Icon
-                            icon={item['icon']}
+                            icon='money'
                             style={{
                             color: 'darkgrey',
                             fontSize: '1.5em'
@@ -103,27 +92,27 @@ export default function Donation_list() {
                             overflow: 'hidden'
                         }}
                         >
-                        <div style={titleStyle}>{item['title']}</div>
+                        <div style={titleStyle}>{ e.group_name } </div>
                         <div style={slimText}>
                             {/* <div>
                             <Icon icon="user-circle-o" />
                             {' ' + item['creator']}
                             </div> */}
-                            <div>{item['date']}</div>
+                            <div>{ e.date }</div>
                         </div>
                         </FlexboxGrid.Item>
                         {/*peak data*/}
                         <FlexboxGrid.Item colspan={6} style={styleCenter}>
                         <div style={{ textAlign: 'right' }}>
                             <div style={slimText}>寄付金額</div>
-                            <div style={dataStyle}>{item['peak'].toLocaleString()}</div>
+                            <div style={dataStyle}>{ e.money }</div>
                         </div>
                         </FlexboxGrid.Item>
                         {/*uv data*/}
                         <FlexboxGrid.Item colspan={6} style={styleCenter}>
-                        <div style={{ textAlign: 'right' }}>
+                        <div style={{ textAlign: 'left' }}>
                             <div style={slimText}>国</div>
-                            <div style={dataStyle}>{item['uv'].toLocaleString()}</div>
+                            <div style={dataStyle}>{ e.nation_name }</div>
                         </div>
                         </FlexboxGrid.Item>
                         {/*uv data*/}
@@ -144,6 +133,13 @@ export default function Donation_list() {
                 ))}
                 </List>
             </div>
+              <div style={{ textAlign: 'center', marginTop: '20px' }}>
+                <Button style={{ marginRight: '15px' }} onClick={goToBeforePage}>
+                  前のページへ
+                </Button>
+                <Button onClick={goToNextPage}>次のページへ</Button>
+                <div style={{ fontSize: '1.5em', marginTop: '10px' }}>- {page} -</div>
+              </div>
             </div>
         </div>
     )
