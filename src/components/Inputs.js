@@ -1,6 +1,7 @@
 import React ,{ useEffect, useState } from 'react';
 import MediaQuery from "react-responsive";
 import { useParams } from 'react-router-dom';
+import { useAuth } from '../hooks/useAuth';
 import '../css/Inputs.css';
 import { Dropdown,Button,Form, Segment, Input, Label } from 'semantic-ui-react';
 import Navbar from '../components/base/Navbar';
@@ -12,6 +13,7 @@ import { useHttp } from '../hooks/useHttp';
 import { useNations } from '../hooks/useNations';
 import { Alert } from 'rsuite';
 import { isValidStr } from '../utils/index.js';
+import * as jwt from "jsonwebtoken";
 
 export default function Inputs() {
     const [groupname,SetGroupName] = useState('');
@@ -24,6 +26,9 @@ export default function Inputs() {
 
     const { http } = useHttp();
     const { allOfNations, getAllOfNations} = useNations();
+    const token = localStorage.getItem('token');
+    const decoded_token = jwt.decode(token)
+    const user_id = decoded_token.user_id
     // const onChangeDate = (date) => {
     //     setStartDate(date)
     // }
@@ -32,11 +37,14 @@ export default function Inputs() {
     })
 
     const { nation_id } = useParams();
+    const { isLoggedIn } = useAuth();
 
     useEffect(() => {
         getAllOfNations();
         setTargetNationId(nation_id);
     },[])
+
+    if (!isLoggedIn) return null
 
     const handleSubmit = async () => {
         try {
@@ -53,7 +61,7 @@ export default function Inputs() {
             // if(moneyvalue <= 0){
             //     return Alert.warning('金額は正の数で入力してください。');
             // }
-            const res = await http.post('/donation_input', { user_id : 2, group_name : groupname, money : moneyvalue, date : dayjs(startDate).format('YYYY-MM-DD'), nations : targetNationId })
+            const res = await http.post('/donation_input', { user_id : user_id, group_name : groupname, money : moneyvalue, date : dayjs(startDate).format('YYYY-MM-DD'), nations : targetNationId })
             if(res.data.message == 'Success'){
                 return Alert.success('寄付記録を作成しました。');
             }

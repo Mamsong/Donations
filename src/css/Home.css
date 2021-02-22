@@ -1,7 +1,7 @@
 .Body {
     background-color: black;
     height:100vh;
-    margin-top: -11px;
+    margin-top: -5px;
 }
 
 .TopContainer{
@@ -11,7 +11,7 @@
     position: relative;/*相対配置*/
 }
 
-.TopContainer p {
+.Ptag {
     position: absolute;/*絶対配置*/
     color: white;/*文字は白に*/
     font-weight: bold; /*太字に*/
@@ -26,6 +26,20 @@
     padding:0;
 }
 
+.Ptagtoken {
+    position: absolute;/*絶対配置*/
+    color: white;/*文字は白に*/
+    font-weight: bold; /*太字に*/
+    font-size: 2em;/*サイズ2倍*/
+    font-family :Quicksand, sans-serif;/*Google Font*/
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%,-50%);
+    -webkit-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+    margin:0;
+    padding:0;
+}
 
 .EarthImage {
         height: 80vh;
