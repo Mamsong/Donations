@@ -1,14 +1,37 @@
 import React, { useState, useEffect }from 'react'
+import { useAuth } from '../hooks/useAuth';
 import { List,FlexboxGrid,Icon } from 'rsuite';
 import Navbar from './base/Navbar';
 import '../css/Donation_list.css';
 import WorldMap from './WorldMap';
 import { Alert } from 'rsuite';
-import { Button } from 'semantic-ui-react';
+import { Button, Modal} from 'semantic-ui-react';
+import  * as jwt from 'jsonwebtoken';
 
 import { useDonationRecord } from '../hooks/useDonationRecord';
 
+function exampleReducer(state, action) {
+  switch (action.type) {
+    case 'close':
+      return { open: false }
+    case 'open':
+      return { open: true, size: action.size }
+    default:
+      throw new Error('Unsupported action...')
+  }
+}
+
 export default function Donation_list() {
+  const [state, dispatch] = React.useReducer(exampleReducer, {
+    open: false,
+    size: undefined,
+  })
+  const { open, size } = state
+
+    const token = localStorage.getItem("token")
+    const decoded_token = jwt.decode(token)
+    const user_id = decoded_token.user_id
+
     const [page, setPage] = useState(1);
     const [offset, setOffset] = useState(0);
     const [isSearched, setIsSearched] = useState(false);
@@ -32,10 +55,14 @@ export default function Donation_list() {
       setPage(page - 1);
     };
 
+    const { isLoggedIn } = useAuth()
+
     useEffect(() => {
-      getDonationList(2, offset);
+      getDonationList(user_id, offset);
     },[offset]);
 
+    if (!isLoggedIn) return null
+    
     const styleCenter = {
       display: 'flex',
       justifyContent: 'center',
@@ -62,12 +89,12 @@ export default function Donation_list() {
       };
       
     return (
-        <div>
+        <div style={{backgroundColor:"#64cafa"}}>
             <Navbar />
             <div className="WorldMapCont"><WorldMap /></div>
                 <div className="Donation_Body">
                 <div className="Donation_table">
-                  <div>寄付記録一覧</div>
+                  <div style={{color:"#0d3380",fontFamily:"cursive",fontSize:"20px", fontWeight:"bold", marginBottom:"4px"}}>寄付記録一覧</div>
                 <List hover>
                 {donationData.map((e) => (
                     <List.Item key={e.record_id} index={e.record_id}>
@@ -126,7 +153,7 @@ export default function Donation_list() {
                         <span style={{ padding: 5 }}>|</span>
                         <a href="#">Edit</a>
                         <span style={{ padding: 5 }}>|</span>
-                        <a href="#">Delete</a>
+                        <a href="#" onClick={() => dispatch({ type: 'open', size: 'small' })}>Delete</a>
                         </FlexboxGrid.Item>
                     </FlexboxGrid>
                     </List.Item>
@@ -138,9 +165,27 @@ export default function Donation_list() {
                   前のページへ
                 </Button>
                 <Button onClick={goToNextPage}>次のページへ</Button>
-                <div style={{ fontSize: '1.5em', marginTop: '10px' }}>- {page} -</div>
+                <div style={{ fontSize: '1.5em', marginTop: '10px',marginBottom:"10px" }}>- {page} -</div>
               </div>
             </div>
+            <Modal
+              size={size}
+              open={open}
+              onClose={() => dispatch({ type: 'close' })}
+            >
+              <Modal.Header>寄付記録を削除しますか？</Modal.Header>
+              <Modal.Content>
+                <p>Are you sure you want to delete your record ?</p>
+              </Modal.Content>
+              <Modal.Actions>
+                <Button negative onClick={() => dispatch({ type: 'close' })}>
+                  No
+                </Button>
+                <Button positive onClick={() => dispatch({ type: 'close' })}>
+                  Yes
+                </Button>
+              </Modal.Actions>
+            </Modal>
         </div>
     )
 }

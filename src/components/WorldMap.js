@@ -26,8 +26,8 @@ function WorldMap(){
 
     return(
         <>
-        <Chart
-                width={'700px'}
+        <Chart  style={{marginTop:"10px"}}
+                width={'750px'}
                 height={'500px'}
                 chartType="GeoChart"
                 // data={list}
@@ -40,7 +40,9 @@ function WorldMap(){
                 options={{
 
                     colorAxis: { colors: ['#00853f', 'black', '#e31b23'] },
-                    backgroundColor: '#81d4fa'
+                    // backgroundColor: '#81d4fa'
+                    backgroundColor: '#64cafa'
+                    // backgroundColor: '#0d3380'
                   }}
                 // Note: you will need to get a mapsApiKey for your project.
                 // See: https://developers.google.com/chart/interactive/docs/basic_load_libs#load-settings

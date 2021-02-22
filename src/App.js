@@ -8,6 +8,7 @@ import Home from './components/Home';
 import Login from './components/Login';
 import Signup from './components/Signup';
 import Donation_list from './components/Donation_list';
+import Start from './components/Start';
 
 function App() {
   return (
@@ -27,6 +28,9 @@ function App() {
         </Route>
         <Route path="/donation_list">
           <Donation_list />
+        </Route>
+        <Route path="/start">
+          <Start />
         </Route>
         </Switch>
     </BrowserRouter>

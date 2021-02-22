@@ -1,0 +1,118 @@
+.AllOf {
+    background-color:#bce2e8;
+    height: 100vh;
+}
+
+.Hands {
+    /* width:80%;*/
+    /* height:70vh;  */
+    padding-top: 5%;
+    display: flex;
+    flex-direction:row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.MikeImage {
+    width: 22vw;
+    height: auto;
+    margin-left: 18vw;
+}
+
+.BroImage {
+    width: 22vw;
+    height: auto;
+    margin-right: 18vw;
+}
+
+.GroupGuide {
+    display: flex;
+    flex-direction:column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* right */
+.balloon1{
+    position: relative;
+    padding: 10px;
+    width: 25%;
+    height: 15vh;
+    line-height: 80px;
+    border-radius: 50%;
+    text-align: center;
+    color: #ffffff;
+    letter-spacing: 0.2em;
+    font-size: 14px;
+    background-color: #ff9800;
+    font-weight: bold;
+  }
+  .balloon1::before{
+    content: '';
+    position: absolute;
+    display: block;
+    width: 0;
+    height: 0;
+    left: 2px;
+    bottom: 2px;
+    border-right: 20px solid #ff9800;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    transform: rotate(-45deg);
+  }
+
+/* left */
+.balloon3{
+    position: relative;
+    padding: 10px;
+    width: 30%;
+    height: 15vh;
+    line-height: 80px;
+    border-radius: 50%;
+    text-align: center;
+    color: #ffffff;
+    letter-spacing: 0.2em;
+    font-size: 14px;
+    background-color: #ff9800;
+    font-weight: bold;
+  }
+  .balloon3::before{
+    content: '';
+    position: absolute;
+    display: block;
+    width: 0;
+    height: 0;
+    right: 2px;
+    bottom: 3px;
+    border-left: 20px solid #ff9800;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    transform: rotate(45deg);
+  }
+/* .balloon3{
+    position: relative;
+    padding: 20px;
+    width: 80px;
+    height: 80px;
+    line-height: 80px;
+    border-radius: 50%;
+    text-align: center;
+    color: #ffffff;
+    letter-spacing: 0.2em;
+    font-size: 14px;
+    background-color: #ff9800;
+  }
+  .balloon3::before{
+    content: '';
+    position: absolute;
+    display: block;
+    width: 0;
+    height: 0;
+    left: 2px;
+    top: 2px;
+    border-right: 20px solid #ff9800;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    transform: rotate(45deg);
+  }
+   */
