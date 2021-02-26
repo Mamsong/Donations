@@ -1,6 +1,6 @@
 import React ,{ useEffect, useState } from 'react';
 import MediaQuery from "react-responsive";
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import '../css/Inputs.css';
 import { Dropdown,Button,Form, Segment, Input, Label } from 'semantic-ui-react';
@@ -21,10 +21,11 @@ export default function Inputs() {
     //日付選択
     const [startDate, setStartDate] = useState(new Date());
     //国選択のため
-    const [targetNationId, setTargetNationId] = useState(0);
+    const [targetNationId, setTargetNationId] = useState([]);
     
 
     const { http } = useHttp();
+    const history = useHistory();
     const { allOfNations, getAllOfNations} = useNations();
     const token = localStorage.getItem('token');
     const decoded_token = jwt.decode(token)
@@ -40,15 +41,18 @@ export default function Inputs() {
     const { isLoggedIn } = useAuth();
 
     useEffect(() => {
+
         getAllOfNations();
         setTargetNationId(nation_id);
     },[])
+
 
     if (!isLoggedIn) return null
 
     const handleSubmit = async () => {
         try {
-            if(isValidStr(groupname) == false||isValidStr(moneyvalue) == false||targetNationId == undefined) return Alert.warning('必要事項を入力してください。');
+            console.log('targetNationId======', targetNationId)
+            if(isValidStr(groupname) == false||isValidStr(moneyvalue) == false||targetNationId.length == 0) return Alert.warning('必要事項を入力してください。');
             if(groupname.length > 60){
                 return Alert.warning('団体名は60字以内で入力してください。');
             }
@@ -63,7 +67,17 @@ export default function Inputs() {
             // }
             const res = await http.post('/donation_input', { user_id : user_id, group_name : groupname, money : moneyvalue, date : dayjs(startDate).format('YYYY-MM-DD'), nations : targetNationId })
             if(res.data.message == 'Success'){
-                return Alert.success('寄付記録を作成しました。');
+                SetGroupName('');
+                SetMoneyValue('');
+                setStartDate(new Date());
+                // setTargetNationId([]);
+                // targetNationId = []
+                setTargetNationId(targetNationId)
+                console.log("後",targetNationId)
+
+                // history.go(0);
+
+                Alert.success('寄付記録を作成しました。');
             }
         } catch (error) {
             console.log(error);
@@ -90,7 +104,6 @@ export default function Inputs() {
                         <Input labelPosition='right' type='text' placeholder='5000' value={moneyvalue} onChange={e => SetMoneyValue(e.target.value)}>
                             <Label basic>¥</Label>
                             <input />
-                            {/* <Label>.00</Label> */}
                         </Input>
                         {/* <Form.Input placeholder='5,000円' /> */}
                         </div>
