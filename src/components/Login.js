@@ -23,6 +23,7 @@ export default function Login() {
             if(response.data.message == "Success"){
                 localStorage.setItem('token',response.data.token);
                 history.push('/')
+                Alert.success('ログインしました。')
             }else if(response.data.message == "ユーザーが存在しません。"){
                 return Alert.warning('ユーザーが存在しません。');
             }

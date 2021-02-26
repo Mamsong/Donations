@@ -16,3 +16,8 @@
     align-items: center;
     flex-direction:column;
 }
+
+.Donation_listCont {
+    height:47vh;
+    background-color: gray;
+}

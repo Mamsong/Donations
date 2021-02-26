@@ -4,25 +4,35 @@ import { Alert } from 'rsuite';
 import Chart from "react-google-charts";
 import { Link, withRouter } from 'react-router-dom';
 import { useWorldmap } from '../hooks/useWorldmap';
+import  * as jwt from 'jsonwebtoken';
+import { Loader } from 'semantic-ui-react'
 
 function WorldMap(){
 
     
-    const {  nationData,
-        getNationData } = useWorldmap();
+    const { nationData, getNationData } = useWorldmap();
+
+    const token = localStorage.getItem("token")
+    const decoded_token = jwt.decode(token)
+    const user_id = decoded_token.user_id
 
     useEffect(() => {
-        getNationData(2)
-      },[]);
-
-    const list = [['CountryKey','Donation'],['CG' ,6888]]
-    // list.push([nationData[0].nation_key, nationData[0].sum]);
+      if(nationData.length == 0) {
+        getNationData(user_id)  
+      } 
+    },[nationData]);
     
-    // function sample() {
-    //     return sampleResolve(5).then(result => {
-    //         return result + 5;
-    //     });
-    // }
+    let list = [];
+    if(nationData.length > 0) {
+      list = [['CountryKey','Donation(¥)']]
+      for(let i = 0; i < nationData.length; i ++){
+        list.push([nationData[i].nation_key, nationData[i].sum]);
+      }
+
+    }
+
+
+    if(nationData.length == 0) return <Loader active inline='centered' />
 
     return(
         <>
@@ -30,16 +40,15 @@ function WorldMap(){
                 width={'750px'}
                 height={'500px'}
                 chartType="GeoChart"
-                // data={list}
-                data={[
-                  ['CountryKey','Donation'],
-                  ['CG' ,6888],
-                  ['AL', 3444],
-                  ['US' ,500]
-                ]}
+                data={
+                  // ['CountryKey','Donation'],
+                  // ['CG' ,6888],
+                  list
+                }
                 options={{
 
-                    colorAxis: { colors: ['#00853f', 'black', '#e31b23'] },
+                    colorAxis: { colors: ['#FFFACD','#00FF00','#018d5b'] },
+                    // #2e8b57
                     // backgroundColor: '#81d4fa'
                     backgroundColor: '#64cafa'
                     // backgroundColor: '#0d3380'

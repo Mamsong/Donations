@@ -22,7 +22,7 @@ function Navbar({ history }){
             {token ? <Link to="/" style={{ color:"#FDDF02", fontWeight:"bold"}}>Home</Link> : null}    
                 {/* <Link to="/signup" style={{ color:"#FDDF02", fontWeight:"bold"}} >Sign up</Link> */}
             {token ? <Link to="/inputs" style={{ color:"#FDDF02", fontWeight:"bold"}} >寄付記録作成</Link> : null}    
-            {token ? <Link to="/donation_list" style={{ color:"#FDDF02", fontWeight:"bold"}} >寄付記録</Link> : null }    
+            {token ? <Link to="/donation_list" style={{ color:"#FDDF02", fontWeight:"bold"}} >My寄付記録</Link> : null }    
             </div>
             {token ? null :<Link to="/" style={{ color:"#FDDF02", fontWeight:"bold",marginRight:"2%"}}>Home</Link> }
             { token ? null : <Button style={{padding:" 8px 0px ",width:"6%",marginRight:"1%"}} color='orange' size="small" onClick={() => history.push('/signup')}>Sign up</Button>}
