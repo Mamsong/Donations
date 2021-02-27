@@ -16,6 +16,7 @@ function WorldMap(){
     const decoded_token = jwt.decode(token)
     const user_id = decoded_token.user_id
 
+
     useEffect(() => {
       if(nationData.length == 0) {
         getNationData(user_id)  
@@ -23,6 +24,10 @@ function WorldMap(){
     },[nationData]);
     
     let list = [];
+    if(nationData.length == 0){
+      list = [['CountryKey','Donation(¥)']]
+    } 
+
     if(nationData.length > 0) {
       list = [['CountryKey','Donation(¥)']]
       for(let i = 0; i < nationData.length; i ++){
@@ -32,13 +37,14 @@ function WorldMap(){
     }
 
 
-    if(nationData.length == 0) return <Loader active inline='centered' />
+    // if(nationData.length == 0) return <Loader active inline='centered' />
 
     return(
         <>
         <Chart  style={{marginTop:"10px"}}
-                width={'750px'}
-                height={'500px'}
+                width={'800px'}
+                height={'540px'}
+                
                 chartType="GeoChart"
                 data={
                   // ['CountryKey','Donation'],

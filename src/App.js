@@ -9,6 +9,7 @@ import Login from './components/Login';
 import Signup from './components/Signup';
 import Donation_list from './components/Donation_list';
 import Start from './components/Start';
+import MyPage from './components/MyPage';
 
 function App() {
   return (
@@ -31,6 +32,9 @@ function App() {
         </Route>
         <Route path="/start">
           <Start />
+        </Route>
+        <Route path="/mypage">
+          <MyPage />
         </Route>
         </Switch>
     </BrowserRouter>
