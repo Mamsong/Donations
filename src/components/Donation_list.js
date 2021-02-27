@@ -3,10 +3,11 @@ import { useAuth } from '../hooks/useAuth';
 import { useHttp } from '../hooks/useHttp';
 import { List,FlexboxGrid,Icon } from 'rsuite';
 import Navbar from './base/Navbar';
+import TotalMoney from './TotalMoney';
 import '../css/Donation_list.css';
 import WorldMap from './WorldMap';
 import { Alert } from 'rsuite';
-import { Button, Modal, Statistic } from 'semantic-ui-react';
+import { Button, Modal } from 'semantic-ui-react';
 import  * as jwt from 'jsonwebtoken';
 import { useHistory } from 'react-router-dom';
 
@@ -46,6 +47,7 @@ export default function Donation_list() {
     const { donationData,
           getDonationList } = useDonationRecord();
 
+
     const goToNextPage = () => {
       setOffset(offset + 4);
       // setPage(page + 1);
@@ -84,6 +86,7 @@ export default function Donation_list() {
       getDonationList(user_id, offset);
     },[offset, open]);
 
+
     if (!isLoggedIn) return null
     
     const styleCenter = {
@@ -114,11 +117,9 @@ export default function Donation_list() {
     return (
         <div style={{backgroundColor:"#64cafa"}}>
             <Navbar />
+            <TotalMoney />
             <div style={{display:"flex",justifyContent:"center"}}>
-            <Statistic size='small' style={{marginTop:"1em"}}>
-              <Statistic.Label>Total</Statistic.Label>
-              <Statistic.Value>¥2,204</Statistic.Value>
-            </Statistic>
+      
             <div className="WorldMapCont"><WorldMap/>
             </div>
             </div>
@@ -176,8 +177,6 @@ export default function Donation_list() {
                               ...styleCenter
                           }}
                           >
-                          <a href="#">Detail</a>
-                          <span style={{ padding: 5 }}>|</span>
                           <a href="#">Edit</a>
                           <span style={{ padding: 5 }}>|</span>
                           <a href="#" onClick={() => { dispatch({ type: 'open', size: 'small' });  setTargetRecordId(e.record_id)} }>Delete</a>

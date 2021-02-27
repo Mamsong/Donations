@@ -1,0 +1,39 @@
+.MyList {
+    /* display: flex;
+    flex-direction: column;
+    justify-content: center; */
+    /* background-color: #03A9F4;  背景色指定 */
+    width: 70%;               /* 幅指定 */
+    height: 90px;               /* 高さ指定 */
+    margin:  6% auto;            /* 中央寄せ */
+   
+}
+
+.UpdateEmail {
+    display: flex;
+    flex-direction: row;
+    /* justify-content: left; */
+    align-items: center;
+}
+
+.UpdateUsename {
+    display: flex;
+    flex-direction: row;
+    /* justify-content: left; */
+    align-items: center;
+}
+
+.UpdatePassword {
+    display: flex;
+    flex-direction: row;
+    /* justify-content: left; */
+    align-items: center;
+}
+
+.FormContent {
+    width: 50%;
+}
+
+.vsc-initialized {
+    background-color:#bce2e8;
+}

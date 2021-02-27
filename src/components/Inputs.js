@@ -62,9 +62,12 @@ export default function Inputs() {
             if(targetNationId.length > 3){
                 return Alert.warning('主な活動地域は最大３つまで登録可能です。');
             }
-            // if(moneyvalue <= 0){
-            //     return Alert.warning('金額は正の数で入力してください。');
-            // }
+            if(moneyvalue <= 0){
+                return Alert.warning('金額は正の数で入力してください。');
+            }
+            if(moneyvalue > 5000000){
+                return Alert.warning('１つの寄付記録金額上限は500万円までです。');
+            }
             const res = await http.post('/donation_input', { user_id : user_id, group_name : groupname, money : moneyvalue, date : dayjs(startDate).format('YYYY-MM-DD'), nations : targetNationId })
             if(res.data.message == 'Success'){
                 SetGroupName('');

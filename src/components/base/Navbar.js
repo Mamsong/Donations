@@ -12,6 +12,10 @@ function Navbar({ history }){
         Alert.success('ログアウトしました。');
     }
 
+    const handleMypage = () => {
+        history.push('/mypage');
+    }
+
     const token = localStorage.getItem('token');
 
     return (
@@ -26,6 +30,7 @@ function Navbar({ history }){
             </div>
             {token ? null :<Link to="/" style={{ color:"#FDDF02", fontWeight:"bold",marginRight:"2%"}}>Home</Link> }
             { token ? null : <Button style={{padding:" 8px 0px ",width:"6%",marginRight:"1%"}} color='orange' size="small" onClick={() => history.push('/signup')}>Sign up</Button>}
+            { token ? <Button style={{padding:" 8px 0px ",width:"6%",marginRight:"0.5%"}} size="small" color='orange' onClick={handleMypage}>MyPage</Button> : null}
             { token ? <Button style={{padding:" 8px 0px ",width:"6%",marginRight:"2%"}} size="small" color='orange' onClick={handleLogout}>Logout</Button> : <Button style={{padding:" 8px 0px ",width:"6%",marginRight:"2%"}} size="small" color='orange' onClick={() => history.push('/login')}>Login</Button>}
             </Menu>
         </MediaQuery>
