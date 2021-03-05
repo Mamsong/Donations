@@ -3,7 +3,6 @@ import Navbar from './base/Navbar';
 import { Header, Segment, Form, Icon, Loader} from 'semantic-ui-react'
 import { Alert } from 'rsuite';
 import { useHttp } from '../hooks/useHttp';
-import { useHistory } from 'react-router-dom';
 import MediaQuery from "react-responsive";
 import '../css/MyPage.css';
 import { useUser } from '../hooks/useUser';
@@ -13,7 +12,7 @@ import { isValidStr } from '../utils/index.js';
 
 export default function MyPage() {
 
-    const { userInfo, getUserInfo } = useUser();
+    const { userInfo, userPass, getUserInfo, getUserPass } = useUser();
 
     const token = localStorage.getItem("token")
     const decoded_token = jwt.decode(token)
@@ -22,7 +21,7 @@ export default function MyPage() {
 
     const [ username, setUsername] = useState("");
     const [ email, setEmail ] = useState("");
-    const [ currentpassword, setCurrentPassword ] = useState("");
+    const [ currentPassword, setCurrentPassword ] = useState("");
     const [ password, setPassword] = useState("");
     const [isEditedEmail, setIsEditedEmail] = useState(false);
     const [isEditedUsername, setIsEditedUsername] = useState(false);
@@ -42,6 +41,7 @@ export default function MyPage() {
             Alert.warning('既に同じメールアドレスが登録されています。');
           } else if(response.data.message == "Success"){
             Alert.success('編集が完了しました。');
+            setEmail('');
           }
         } catch (err){
           Alert.error('編集に失敗しました。')
@@ -57,11 +57,31 @@ export default function MyPage() {
             const response = await http.put('/users/username',{ user_id:user_id, username:username });
             if(response.data.message == "Success"){
                 Alert.success('編集が完了しました。');
+                setUsername('');
             }
         } catch (error) {
             Alert.error('編集に失敗しました。');
         }
     }
+
+    const updatePassword = async () => {
+        try{
+          const regExp = /^(?=.*?[a-z])(?=.*?\d)[a-z\d]{4,15}$/i;
+          if(!password) return Alert.warning('新しいパスワードを入力してください。');
+          if(!currentPassword) return Alert.warning('現在のパスワードを入力してください。')
+          if(userPass[0].password != currentPassword) return Alert.warning('現在のパスワードが誤っております。');
+    
+          if(password.length < 4 || password.length > 15) return Alert.warning('パスワードは4文字以上15文字以内で入力してください。');
+          if(!password.match(regExp)) return Alert.warning('パスワードは英数字を含めて入力してください。');
+    
+          await http.put('/users/password',{ user_id :user_id ,password:password });
+          setCurrentPassword('');
+          setPassword('');
+          Alert.success('編集が完了しました。')
+        }catch (err){
+          Alert.error('編集に失敗しました。')
+        }
+      }
 
     const handleCheckIsEditedEmail = (value) => {
         if (userInfo[0].email != value) {
@@ -79,24 +99,28 @@ export default function MyPage() {
         } 
     }
 
-
+    const handleCheckIsEditedPassword = (value) => {  
+        if (value.length > 0) {
+          setIsInputedPassword(true);
+        } else {
+          setIsInputedPassword(false);
+          console.log(value)
+        }
+      }
 
     useEffect(() => {
         getUserInfo(user_id);
-      },[])
+        getUserPass(user_id);
+      },[userInfo])
 
-      if(userInfo.length == 0){
+
+      if(userInfo.length == 0||userPass.length == 0){
         return(
             <>
             < Loader active inline='centered'/>
             </>
         )
     }
-
-    // if(userInfo.length > 0){
-    //     console.log(userInfo)
-    // }
-
 
     return(
         <>
@@ -142,13 +166,13 @@ export default function MyPage() {
             </Header>
             <Segment attached>
             <Form className="FormContent" style={{marginBottom:"8px"}}>
-                <Form.Input type='password' placeholder='現在のパスワード' value={currentpassword} onChange={(e) => setCurrentPassword(e.target.value)}/>
+                <Form.Input type='password' value={currentPassword} onChange={(e) => {setCurrentPassword(e.target.value)}}　placeholder='現在のパスワード' />
             </Form>
             <div className="UpdatePassword">
             <Form className="FormContent">
-                <Form.Input type='password' placeholder='新しいパスワード' value={password} onChange={(e) => setPassword(e.target.value)}/>
+                <Form.Input type='password' value={password} onChange={(e) => { setPassword(e.target.value); handleCheckIsEditedPassword(e.target.value);}}　placeholder='新しいパスワード' />
             </Form>
-            <Button appearance="primary" style={{ marginLeft:"8px" }}>
+            <Button appearance="primary" disabled={!isInputedPassword} onClick={updatePassword} style={{ marginLeft:"8px" }}>
               編集する
             </Button>
             </div>
