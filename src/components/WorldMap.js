@@ -1,13 +1,12 @@
-import React, { useState,useEffect } from 'react';
-import { useHttp } from '../hooks/useHttp';
-import { Alert } from 'rsuite';
+import React, { useReducer,useEffect } from 'react';
 import Chart from "react-google-charts";
-import { Link, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { useWorldmap } from '../hooks/useWorldmap';
 import  * as jwt from 'jsonwebtoken';
 import { Loader } from 'semantic-ui-react'
 
-function WorldMap(){
+
+function WorldMap({ open }){
 
     
     const { nationData, getNationData } = useWorldmap();
@@ -16,12 +15,11 @@ function WorldMap(){
     const decoded_token = jwt.decode(token)
     const user_id = decoded_token.user_id
 
-
     useEffect(() => {
-      if(nationData.length == 0) {
+      
         getNationData(user_id)  
-      } 
-    },[nationData]);
+      
+    },[open]);
     
     let list = [];
     if(nationData.length == 0){
@@ -61,7 +59,7 @@ function WorldMap(){
                   }}
                 // Note: you will need to get a mapsApiKey for your project.
                 // See: https://developers.google.com/chart/interactive/docs/basic_load_libs#load-settings
-                mapsApiKey=""
+                mapsApiKey="AIzaSyDd00dFepxFJrbIuMW_lfiYSrEgTyVsdq8"
                 rootProps={{ 'data-testid': '1' }}
             />
         </>

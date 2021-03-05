@@ -10,6 +10,7 @@ import { Alert } from 'rsuite';
 import { Button, Modal } from 'semantic-ui-react';
 import  * as jwt from 'jsonwebtoken';
 import { useHistory } from 'react-router-dom';
+import ReactPaginate from 'react-paginate';
 
 import { useDonationRecord } from '../hooks/useDonationRecord';
 
@@ -37,34 +38,23 @@ export default function Donation_list() {
     const { http } = useHttp();
     const history = useHistory();
 
-    const [page, setPage] = useState(1);
-    const [offset, setOffset] = useState(0);
-    // const [isSearched, setIsSearched] = useState(false);
-
     const [ targetRecordId, setTargetRecordId ] = useState(0);
 
 
     const { donationData,
           getDonationList } = useDonationRecord();
 
+    console.log('______donationData______', donationData);
 
-    const goToNextPage = () => {
-      setOffset(offset + 4);
-      // setPage(page + 1);
-      console.log(donationData)
-      if(donationData.length < 4) {
-        setOffset(offset);
-        setPage(page);
-        return Alert.warning('該当するデータがありません。');
-      }
-      setPage(page + 1);
-    };
 
-    const goToBeforePage = () => {
-      if(page == 1) return Alert.warning('該当するデータがありません。');
-      setOffset(offset - 4);
-      setPage(page - 1);
-    };
+    const [ offset, setOffset ] = useState(0); // 何番目のアイテムから表示するか
+    const perPage = 4; // 1ページあたりに表示したいアイテムの数
+
+
+    const handlePageChange = (data) => {
+      let page_number = data['selected']; // クリックした部分のページ数が{selected: 2}のような形で返ってくる
+      setOffset(page_number*perPage); // offsetを変更し、表示開始するアイテムの番号を変更
+  }
 
     const deleteRecord = async () => {
       try {
@@ -83,8 +73,9 @@ export default function Donation_list() {
     const { isLoggedIn } = useAuth()
 
     useEffect(() => {
-      getDonationList(user_id, offset);
-    },[offset, open]);
+      console.log(' USEEFFECT IS CALLED =======');
+      getDonationList(user_id);
+    },[open]);
 
 
     if (!isLoggedIn) return null
@@ -117,10 +108,10 @@ export default function Donation_list() {
     return (
         <div style={{backgroundColor:"#64cafa"}}>
             <Navbar />
-            <TotalMoney />
+            <TotalMoney open={open}/>
             <div style={{display:"flex",justifyContent:"center"}}>
       
-            <div className="WorldMapCont"><WorldMap/>
+            <div className="WorldMapCont"><WorldMap open={open} />
             </div>
             </div>
                 <div className="Donation_Body">
@@ -128,72 +119,80 @@ export default function Donation_list() {
                   <div style={{color:"#0d3380",fontFamily:"cursive",fontSize:"20px", fontWeight:"bold", marginBottom:"4px"}}>寄付記録一覧</div>
                 <List hover>
                   <div className="Donation_listCont">
-                {donationData.map((e) => (
-                    <List.Item key={e.record_id} index={e.record_id}>
-                      <FlexboxGrid>
-                          {/*icon*/}
-                          <FlexboxGrid.Item colspan={2} style={styleCenter}>
-                          <Icon
-                              icon='money'
-                              style={{
-                              color: 'darkgrey',
-                              fontSize: '1.5em'
-                              }}
-                          />
-                          </FlexboxGrid.Item>
-                          {/*base info*/}
-                          <FlexboxGrid.Item
-                          colspan={6}
+                  {donationData
+            .slice(offset, offset + perPage) // 表示したいアイテムをsliceで抽出
+            .map((e)=>{
+                return(
+                  <List.Item key={e.record_id} index={e.record_id}>
+                  <FlexboxGrid>
+                      {/*icon*/}
+                      <FlexboxGrid.Item colspan={2} style={styleCenter}>
+                      <Icon
+                          icon='money'
                           style={{
-                              ...styleCenter,
-                              flexDirection: 'column',
-                              alignItems: 'flex-start',
-                              overflow: 'hidden'
+                          color: 'darkgrey',
+                          fontSize: '1.5em'
                           }}
-                          >
-                          <div style={titleStyle}>{ e.group_name } </div>
-                          <div style={slimText}>
-                              <div>{ e.date }</div>
-                          </div>
-                          </FlexboxGrid.Item>
-                          {/*peak data*/}
-                          <FlexboxGrid.Item colspan={6} style={styleCenter}>
-                          <div style={{ textAlign: 'right' }}>
-                              <div style={slimText}>寄付金額</div>
-                              <div style={dataStyle}>{ e.money }</div>
-                          </div>
-                          </FlexboxGrid.Item>
-                          {/*uv data*/}
-                          <FlexboxGrid.Item colspan={6} style={styleCenter}>
-                          <div style={{ textAlign: 'left' }}>
-                              <div style={slimText}>国</div>
-                              <div style={dataStyle}>{ e.nation_name }</div>
-                          </div>
-                          </FlexboxGrid.Item>
-                          {/*uv data*/}
-                          <FlexboxGrid.Item
-                          colspan={4}
-                          style={{
-                              ...styleCenter
-                          }}
-                          >
-                          <a href="#">Edit</a>
-                          <span style={{ padding: 5 }}>|</span>
-                          <a href="#" onClick={() => { dispatch({ type: 'open', size: 'small' });  setTargetRecordId(e.record_id)} }>Delete</a>
-                          </FlexboxGrid.Item>
-                      </FlexboxGrid>
-                    </List.Item>
-                    
-                ))}
+                      />
+                      </FlexboxGrid.Item>
+                      <FlexboxGrid.Item
+                      colspan={6}
+                      style={{
+                          ...styleCenter,
+                          flexDirection: 'column',
+                          alignItems: 'flex-start',
+                          overflow: 'hidden'
+                      }}
+                      >
+                      <div style={titleStyle}>{ e.group_name } </div>
+                      <div style={slimText}>
+                          <div>{ e.date }</div>
+                      </div>
+                      </FlexboxGrid.Item>
+                     
+                      <FlexboxGrid.Item colspan={6} style={styleCenter}>
+                      <div style={{ textAlign: 'right' }}>
+                          <div style={slimText}>寄付金額</div>
+                          <div style={dataStyle}>{ e.money }</div>
+                      </div>
+                      </FlexboxGrid.Item>
+                      <FlexboxGrid.Item colspan={6} style={styleCenter}>
+                      <div style={{ textAlign: 'left' }}>
+                          <div style={slimText}>国</div>
+                          <div style={dataStyle}>{ e.nation_name }</div>
+                      </div>
+                      </FlexboxGrid.Item>
+                      <FlexboxGrid.Item
+                      colspan={4}
+                      style={{
+                          ...styleCenter
+                      }}
+                      >
+                      <a href="#">Edit</a>
+                      <span style={{ padding: 5 }}>|</span>
+                      <a href="#" onClick={() => { dispatch({ type: 'open', size: 'small' });  setTargetRecordId(e.record_id)} }>Delete</a>
+                      </FlexboxGrid.Item>
+                  </FlexboxGrid>
+                </List.Item>)
+            })}
                 </div>
                 </List>
             </div>
-              <div style={{ textAlign: 'center', marginTop: '20px' }}>
-                <Button style={{ marginRight: '15px' }} onClick={goToBeforePage}>
-                  前のページへ
-                </Button>
-                <Button onClick={goToNextPage}>次のページへ</Button>
-                <div style={{ fontSize: '1.5em', marginTop: '10px',marginBottom:"10px" }}>- {page} -</div>
+              
+              <div className="Pagenation">
+              
+              <ReactPaginate
+                    previousLabel={"<<"}
+                    nextLabel={">>"}
+                    breakLabel={"..."}
+                    breakClassName={"break-me"}
+                    pageCount={Math.ceil(donationData.length/perPage)} 
+                    marginPagesDisplayed={2}
+                    pageRangeDisplayed={5}
+                    onPageChange={handlePageChange}
+                    containerClassName={"pagination"}
+                    subContainerClassName={"pages pagination"}
+                    activeClassName={"active"}/>
               </div>
             </div>
             <Modal
