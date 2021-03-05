@@ -7,9 +7,9 @@ export const useDonationRecord = () => {
 
     const [donationData, setDonationData] = useState([]);
     
-    const getDonationList = async (user_id, already_got) => {
+    const getDonationList = async (user_id) => {
         try {
-            const { data } = await http.get(`/donation_list/${user_id}/${already_got}`);
+            const { data } = await http.get(`/donation_list/record/${user_id}`);
             setDonationData(data);
             return data;
         } catch (error) {

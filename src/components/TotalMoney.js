@@ -4,7 +4,7 @@ import  * as jwt from 'jsonwebtoken';
 import { Loader,Statistic } from 'semantic-ui-react'
 import { useTotal } from '../hooks/useTotal';
 
-function TotalMoney() {
+function TotalMoney({ open }) {
 
     const { totalData,
         getTotalMoney } = useTotal();
@@ -14,10 +14,10 @@ function TotalMoney() {
     const user_id = decoded_token.user_id
 
     useEffect(() => {
-        if(totalData.length == 0) {
+        
             getTotalMoney(user_id)  
-        } 
-      },[totalData]);
+        
+      },[totalData,open]);
 
       if(totalData.length == 0) return <Loader active inline='centered'/>
 
@@ -29,7 +29,7 @@ function TotalMoney() {
           </Statistic>
         </>
     )
-    console.log(totalData)
+    
 
       if(totalData.length > 0) {
         return(

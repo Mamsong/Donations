@@ -21,6 +21,7 @@ export default function Signup() {
     const HandleRegister = async () => {
         try {
             if(isValidStr(username) == false||isValidStr(email) == false||isValidStr(password) == false) return Alert.warning('必要事項を入力してください。');
+            if(email.length < 6 || email.length > 32) return Alert.warning('メールアドレスは6文字以上32文字以内で入力してください。');
             if(password.length < 4 || password.length > 15) return Alert.warning('パスワードは4文字以上15文字以内で入力してください。');
             const response = await http.post('/users/signup', { username:username, email:email, password:password});
             // console.log(response);

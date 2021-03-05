@@ -76,7 +76,7 @@ export default function Inputs() {
                 // setTargetNationId([]);
                 // targetNationId = []
                 setTargetNationId(targetNationId)
-                console.log("後",targetNationId)
+                // console.log("後",targetNationId)
 
                 // history.go(0);
 
