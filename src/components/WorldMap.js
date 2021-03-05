@@ -59,7 +59,7 @@ function WorldMap({ open }){
                   }}
                 // Note: you will need to get a mapsApiKey for your project.
                 // See: https://developers.google.com/chart/interactive/docs/basic_load_libs#load-settings
-                mapsApiKey="AIzaSyDd00dFepxFJrbIuMW_lfiYSrEgTyVsdq8"
+                mapsApiKey=""
                 rootProps={{ 'data-testid': '1' }}
             />
         </>

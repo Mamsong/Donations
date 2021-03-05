@@ -28,6 +28,7 @@
     display: flex;
     list-style: none;
     outline: none;
+    background-color:"#64cafa";
   }
   .pagination > .active > a{
     background-color: #0d3380 ;
@@ -46,8 +47,10 @@
     outline: none ;
   }
   .pagination > li > a, .pagination > li > span{
+    background-color:#64cafa;
     color: #0d3380
   }
   .pagination > li:first-child > a, .pagination > li:first-child > span, .pagination > li:last-child > a, .pagination > li:last-child > span{
+    background-color:"#64cafa";
     border-radius: unset
   }

@@ -179,11 +179,11 @@ export default function Donation_list() {
                 </List>
             </div>
               
-              <div className="Pagenation">
+              <div className="Pagenation" style={{backgroundColor:"#64cafa"}}>
               
               <ReactPaginate
-                    previousLabel={"<<"}
-                    nextLabel={">>"}
+                    previousLabel={"前"}
+                    nextLabel={"次"}
                     breakLabel={"..."}
                     breakClassName={"break-me"}
                     pageCount={Math.ceil(donationData.length/perPage)} 
